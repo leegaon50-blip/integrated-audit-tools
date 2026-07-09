@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'" />
+  <title>감사 데이터 정제 툴</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-container">
+
+    <header class="app-header">
+      <span class="app-brand">◈ 감사 데이터 정제 툴</span>
+      <span class="app-version">v2.0.0</span>
+    </header>
+
+    <nav class="tab-nav">
+      <button class="tab-btn active" data-tab="clean-vendors">
+        분개장 맞춤형 정제
+      </button>
+    </nav>
+
+    <main class="content-area">
+      <section id="tab-clean-vendors" class="tab-panel active">
+
+        <!-- ① 파일 업로드 -->
+        <div class="panel-header">
+          <h2>분개장 맞춤형 열 매핑 및 정제</h2>
+          <p>엑셀 또는 CSV 파일을 드래그하거나 클릭하여 선택하세요. 열 이름 칩이 자동으로 생성됩니다.</p>
+        </div>
+
+        <div id="dropzone" class="dropzone">
+          <div class="dropzone-inner">
+            <svg class="drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 16V4m0 12-4-4m4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 19h18" stroke-linecap="round"/>
+            </svg>
+            <span class="drop-label">파일을 여기에 드래그하거나 클릭하여 선택</span>
+            <span class="drop-hint">.xlsx · .xls · .csv</span>
+          </div>
+          <input type="file" id="file-input" accept=".xlsx,.xls,.csv" hidden />
+        </div>
+
+        <div id="file-info" class="file-info hidden">
+          <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+            <path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/>
+          </svg>
+          <span id="file-name"></span>
+          <button id="clear-file" class="btn-icon" title="파일 제거">✕</button>
+        </div>
+
+        <!-- ② 열 이름 칩 풀 (파일 로드 후 표시) -->
+        <div id="chip-pool-section" class="chip-pool-section hidden">
+          <div class="section-label">열 이름 칩 — 아래 박스로 드래그하세요</div>
+          <div id="chip-pool" class="chip-pool"></div>
+        </div>
+
+        <!-- ③ 5대 매핑 박스 (파일 로드 후 표시) -->
+        <div id="mapping-section" class="mapping-section hidden">
+          <div class="section-label">열 매핑</div>
+          <div class="mapping-grid">
+
+            <div class="map-box" id="box-account" data-key="account" data-max="2">
+              <div class="box-label">
+                계정명
+                <span class="box-hint">최대 2개</span>
+              </div>
+              <div class="box-placeholder">차변·대변 계정명 칩을 드롭</div>
+              <div class="box-slots"></div>
+            </div>
+
+            <div class="map-box" id="box-debit" data-key="debit" data-max="1">
+              <div class="box-label">차변금액</div>
+              <div class="box-placeholder">칩을 드롭</div>
+              <div class="box-slots"></div>
+            </div>
+
+            <div class="map-box" id="box-credit" data-key="credit" data-max="1">
+              <div class="box-label">대변금액</div>
+              <div class="box-placeholder">칩을 드롭</div>
+              <div class="box-slots"></div>
+            </div>
+
+            <div class="map-box" id="box-desc" data-key="description" data-max="1">
+              <div class="box-label">적요</div>
+              <div class="box-placeholder">칩을 드롭</div>
+              <div class="box-slots"></div>
+            </div>
+
+            <div class="map-box" id="box-vendor" data-key="vendor" data-max="1">
+              <div class="box-label">거래처코드</div>
+              <div class="box-placeholder">칩을 드롭</div>
+              <div class="box-slots"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ④ 액션 버튼 -->
+        <div class="action-row">
+          <button id="btn-run" class="btn-primary" disabled>정제 시작</button>
+          <button id="btn-reset-mapping" class="btn-ghost-sm hidden">매핑 초기화</button>
+        </div>
+
+        <!-- ⑤ 실행 로그 -->
+        <div id="log-box" class="log-box hidden">
+          <div class="log-header">
+            <span>실행 로그</span>
+            <button id="btn-clear-log" class="btn-ghost-sm">로그 지우기</button>
+          </div>
+          <pre id="log-output"></pre>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

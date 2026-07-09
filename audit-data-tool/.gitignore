@@ -1,0 +1,18 @@
+node_modules/
+dist/
+out/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# 비밀/환경변수 (혹시라도 추가될 경우 대비)
+.env
+.env.*
+
+# 실제 감사 데이터 유입 방지: 엑셀/CSV는 기본 차단, 포트폴리오용 샘플만 예외 허용
+*.xlsx
+*.xls
+*.csv
+!가공전_분개장_샘플.xlsx

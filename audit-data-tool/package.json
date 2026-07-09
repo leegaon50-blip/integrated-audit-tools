@@ -1,0 +1,37 @@
+{
+  "name": "audit-data-tool",
+  "version": "1.0.0",
+  "description": "회계 감사 데이터 전수조사 및 정제 도구",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "nodemon",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.audit.data-tool",
+    "productName": "감사데이터정제툴",
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**",
+      "python/**",
+      "assets/**"
+    ],
+    "asarUnpack": [
+      "python/**"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0",
+    "nodemon": "^3.1.14"
+  }
+}

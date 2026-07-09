@@ -1,0 +1,7 @@
+{
+  "watch": ["main.js", "preload.js", "renderer"],
+  "ext": "js,html,css",
+  "ignore": ["node_modules", "dist"],
+  "exec": "electron .",
+  "delay": 300
+}
