@@ -1122,6 +1122,31 @@ if (window.electronAPI) {
   window.electronAPI.onShowJobsTab(() => switchTab('jobs'));
 }
 
+// ── 다크/라이트 모드 전환 ─────────────────────────────────────────────────────
+
+const THEME_KEY = 'schedule_app_theme';
+
+function applyTheme(theme) {
+  const root = document.documentElement;
+  if (theme === 'light') root.setAttribute('data-theme', 'light');
+  else root.removeAttribute('data-theme');
+  const icon = document.getElementById('theme-toggle-icon');
+  if (icon) icon.className = theme === 'light' ? 'ti ti-moon' : 'ti ti-sun';
+  const btn = document.getElementById('theme-toggle-btn');
+  if (btn) btn.title = theme === 'light' ? '다크 모드로 전환' : '라이트 모드로 전환';
+  const metaColor = document.getElementById('meta-theme-color');
+  if (metaColor) metaColor.setAttribute('content', theme === 'light' ? '#f7f8fb' : '#0f1117');
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  const next = current === 'light' ? 'dark' : 'light';
+  localStorage.setItem(THEME_KEY, next);
+  applyTheme(next);
+}
+
+applyTheme(localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark');
+
 // ── Electron 미니뷰 전환 ──────────────────────────────────────────────────────
 
 let isMini = false;
